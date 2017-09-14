@@ -1,3 +1,35 @@
+# learn bluebird promise library
+
+## mongoose promisify
+
+```
+var Promise = require('bluebird');
+
+var mongoose = require('mongoose');
+
+mongoose.Promise = Promise;
+
+//promisify mongoose 
+Promise.promisifyAll(mongoose.Model);
+Promise.promisifyAll(mongoose.Model.prototype);
+Promise.promisifyAll(mongoose.Query.prototype);
+
+var conn = mongoose.createConnection('mongodb://localhost/hellobluebird');
+
+var Schema = new mongoose.Schema({
+    uid:    String,
+    username:   String
+});
+
+var model = conn.model('user',Schema);
+
+module.exports = model;
+
+```
+
+## function promisify
+
+```
 var Promise = require("bluebird");
 
 var mongo = require('./mongo.js');
@@ -22,6 +54,7 @@ Model.prototype.three = function (uid){
 
 //以上三个方法 由于mongoose 支持promise 所以不需要Promise.method再封装成返回promise的函数了。
 
+//以下是自定义的函数 手动promise化
 Model.prototype.userFunc1 = Promise.method(function(){
     return 'userFunc1';
 });
@@ -58,3 +91,7 @@ Promise.try(function(){
 }).finally(function(){
     console.log('finally');
 });
+
+//上门的方法 效果等同于 async.waterfall
+
+```
