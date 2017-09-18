@@ -36,6 +36,7 @@ var model = new Model();
 // Start the chain of promises with Promise.try 等同于async.waterfall
 const uid = '10010';
 const username = 'test';
+
 Promise.try(function(){
     console.log('one');
     return model.one(uid).then(function(data){
@@ -44,17 +45,20 @@ Promise.try(function(){
 }).then(function(){
     console.log('two');
     return model.two(uid,username);
-}).then(function(){
-    console.log('three')
+}).then(function(info){
+    console.log('three',info)
     return model.three(uid);
 }).then(function(){
     console.log('userFunc1');
     return model.userFunc1();
 }).then(function(){
     console.log('userFunc2');
+    // return Promise.reject('no_userInfo'); //出现错误直接停止 
     return model.userFunc2();
 }).catch(function(e){
+    if(e == 'no_userInfo'){
+        console.error('helloooooo')
+        return ;
+    }
     console.error('error ',e);
-}).finally(function(){
-    console.log('finally');
 });
