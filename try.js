@@ -39,12 +39,14 @@ const username = 'test';
 
 Promise.try(function(){
     console.log('one');
-    return model.one(uid).then(function(data){
-        // console.log(data);
-    });
-}).then(function(){
+    return model.one(uid);
+}).then(function(info){
     console.log('two');
-    return model.two(uid,username);
+    if(!info){
+        return model.two(uid,username);
+    } else {
+        return info;
+    }
 }).then(function(info){
     console.log('three',info)
     return model.three(uid);
