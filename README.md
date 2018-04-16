@@ -1,5 +1,7 @@
 # learn bluebird promise library
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/NextZeus/hellobluebird.svg)](https://greenkeeper.io/)
+
 ## mongoose promisify
 
 ```
